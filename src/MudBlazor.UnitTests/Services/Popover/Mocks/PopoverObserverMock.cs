@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MudBlazor.UnitTests.Services.Popover.Mocks;
@@ -15,9 +16,9 @@ internal class PopoverObserverMock : IPopoverObserver
 
     public List<Guid> PopoverNotifications { get; } = new();
 
-    public Task PopoverCollectionUpdatedNotification(IEnumerable<IMudPopoverHolder> holders)
+    public Task PopoverCollectionUpdatedNotificationAsync(PopoverHolderContainer container, CancellationToken cancellationToken)
     {
-        foreach (var holder in holders)
+        foreach (var holder in container.Holders)
         {
             PopoverNotifications.Add(holder.Id);
         }
